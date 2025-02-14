@@ -48,8 +48,14 @@ def main(args):
         print(f'# k = {params.k}')
         print(f'# m = {params.m}')
         print(f'# n = {params.n}')
-        for row in matrix:
-            print(','.join(map(str, row)))
+        if args.js:
+            print('[')
+            for row in matrix:
+                print('[' + ','.join(map(str, row)) + '],')
+            print(']')
+        else:
+            for row in matrix:
+                print(','.join(map(str, row)))
     elif args.cmd == 'by-sample':
         print('# sample: pool(s)')
         for col in range(matrix.shape[1]):
@@ -94,6 +100,7 @@ def parse_args():
     parser.add_argument('--k', type=int, default=2, help='max degree of polynomial; higher k supports more samples but lowers disjunctness')
     parser.add_argument('--n', type=int, default=96 * 2, help='number of specimens')
     parser.add_argument('--positive', type=comma_sep_int_list, default=None, help='comma separated list of positive pool ids')
+    parser.add_argument('--js', default=False, action='store_true', help='output matrix in js format')
     return parser.parse_args()
 
 if __name__ == '__main__':
