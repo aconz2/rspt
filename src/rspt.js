@@ -1,11 +1,14 @@
 import {table} from './galoistable.js';
 
-const smallPrimes = [3, 7, 11, 13, 17, 19, 23, 27];
+const smallPrimes = [3, 7, 11, 13, 17, 19, 23];
 
 export class Params {
     constructor(q, k, m, n) {
         if (n > Math.pow(q, k)) {
             throw new Error('n must be no more than q ** k');
+        }
+        if (table[q] === undefined && smallPrimes.indexOf(q) === -1) {
+            throw new Error('q is unhandled');
         }
         this.q = q;
         this.k = k;
@@ -17,6 +20,8 @@ export class Params {
         return Math.floor((this.m - 1) / this.k);
     }
 }
+
+export const validQ = Array.from(Object.keys(table)).map(x => parseInt(x)).concat(smallPrimes).toSorted((a, b) => a - b);
 
 export function testingMatrix(params) {
     let rows = params.q * params.m;

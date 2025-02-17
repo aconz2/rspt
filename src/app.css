@@ -5,21 +5,21 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
+#matrix #sampleno {
+    /*font-size: 1vh;*/
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    vertical-align: bottom;
+    td { width: 10px; }
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.preact:hover {
-  filter: drop-shadow(0 0 2em #673ab8aa);
-}
-
-.card {
-  padding: 2em;
+#matrix tbody td {
+    /*aspect-ratio: 1 / 1;*/
+    padding: 0;
 }
 
-.read-the-docs {
-  color: #888;
+#matrix tbody tr:hover {
+    background-color: deepskyblue;
+}
+#matrix td.filled {
+    background-color: black;
 }
