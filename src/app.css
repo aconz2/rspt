@@ -5,6 +5,13 @@
   text-align: center;
 }
 
+#matrix thead {
+  position: sticky;
+  top: 0px;  /* 0px if you don't have a navbar, but something is required */
+  background: white;
+  padding: 5px;
+}
+
 #matrix #sampleno {
     /*font-size: 1vh;*/
     writing-mode: vertical-rl;
@@ -17,6 +24,18 @@
     padding: 0;
 }
 
+#matrix .samplelistpad {
+    width: 20px;
+}
+#matrix .samplelist {
+    text-align: left;
+    padding-left: 5px;
+    border-left: 1px solid black;
+}
+
+#matrix {
+    border-collapse: collapse;
+}
 #matrix tbody tr:hover {
     background-color: deepskyblue;
 }

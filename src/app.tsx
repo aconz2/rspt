@@ -12,7 +12,12 @@ function matrixToTable(arr) {
                 <tr id="sampleno"><td></td>{arr[0].map((_, i) => <td>{i}</td>)}</tr>
             </thead>
             <tbody>
-                {arr.map((row, i) => <tr><td>{i}</td>{row.map(x => <td className={x === 1 ? 'filled' : ''}></td>)}</tr>)}
+                {arr.map((row, i) => <tr>
+                         <td>{i}</td>
+                         {row.map(x => <td className={x === 1 ? 'filled' : ''}></td>)}
+                         <td class="samplelistpad"></td>
+                         <td class="samplelist">{row.map((x, i) => x === 1 ? i : null).reduce((acc, i) => i === null ? acc : acc.concat([i]), []).join(',') } </td>
+                         </tr>)}
             </tbody>
         </table>
         </>
