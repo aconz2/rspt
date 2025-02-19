@@ -16,6 +16,9 @@ export class Params {
         this.n = n;
     }
 
+    samples() { return this.n; }
+    pools() { return this.q * this.m; }
+
     disjunctness() {
         return Math.floor((this.m - 1) / this.k);
     }
@@ -24,7 +27,7 @@ export class Params {
 export const validQ = Array.from(Object.keys(table)).map(x => parseInt(x)).concat(smallPrimes).toSorted((a, b) => a - b);
 
 export function testingMatrix(params) {
-    let rows = params.q * params.m;
+    let rows = params.pools();;
     let cols = params.n;
     let ret = Array.from({length: rows}, () => Array.from({length: cols}, () => 0));
     let xs = Array.from({length: params.m}, (_, i) => i);
