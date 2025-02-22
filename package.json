@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "test": "node src/rspt.test.js",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
