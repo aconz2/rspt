@@ -41,6 +41,26 @@ export function testingMatrix(params) {
     return ret;
 }
 
+function setNonzeroIndices(row) {
+    let ret = new Set();
+    row.forEach((x, i) => {
+        if (x === 1) {
+            ret.add(i);
+        }
+    });
+    return ret;
+}
+
+export function solveMatrix(matrix, positives) {
+    if (positives.length === 0) return [];
+    let wholeSet = new Set(Array.from({length: matrix[0].length}, (_, i) => i));
+    return Array.from(
+        positives
+        .map(i => setNonzeroIndices(matrix[i]))
+        .reduce((a, b) => a.intersection(b), wholeSet)
+    );
+}
+
 export function polynomialCoeffs(q, i) {
     let ret = [];
     while (i !== 0) {

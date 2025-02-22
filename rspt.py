@@ -38,6 +38,18 @@ def solve_testing_matrix(mat: np.ndarray, positive: List[int]):
     row = reduce(operator.and_, (mat[p] for p in positive))
     return np.flatnonzero(row)
 
+def params_sweep():
+    for q in [3, 4, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 32]:
+        for k in range(1, 6):
+            for m in range(1, 7):
+                n = q ** k
+                p = Params(q, k, m, n)
+                d = p.disjunctness()
+                rows = q * m
+                ratio = n / rows
+                if d > 1 and ratio > 1:
+                    print(f'q={q} k={k} m={m} n={n} d={d} ratio={ratio:.2}')
+
 def main(args):
     params = Params(q=args.q, k=args.k, m=args.m, n=args.n)
     d = params.disjunctness()
@@ -104,5 +116,6 @@ def parse_args():
     return parser.parse_args()
 
 if __name__ == '__main__':
-    main(parse_args())
+    #main(parse_args())
+    params_sweep()
 
