@@ -96,6 +96,8 @@ def main(args):
             if len(samples) == 0:
                 continue
             print(combo, samples)
+    elif args.cmd == 'params-sweep':
+        params_sweep()
 
     else:
         raise Exception(f'didnt handle {args.cmd}')
@@ -106,7 +108,7 @@ def comma_sep_int_list(s):
 def parse_args():
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('cmd', choices=['matrix', 'by-sample', 'by-pool', 'solve', 'all-outcomes'])
+    parser.add_argument('cmd', choices=['matrix', 'by-sample', 'by-pool', 'solve', 'all-outcomes', 'params-sweep'])
     parser.add_argument('--q', type=int, default=16, help='order of galois field')
     parser.add_argument('--m', type=int, default=6, help='number of layers / number of pools each sample goes in')
     parser.add_argument('--k', type=int, default=2, help='max degree of polynomial; higher k supports more samples but lowers disjunctness')
@@ -116,6 +118,5 @@ def parse_args():
     return parser.parse_args()
 
 if __name__ == '__main__':
-    #main(parse_args())
-    params_sweep()
+    main(parse_args())
 
