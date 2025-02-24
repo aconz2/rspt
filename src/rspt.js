@@ -51,14 +51,18 @@ function setNonzeroIndices(row) {
     return ret;
 }
 
-export function solveMatrix(matrix, positives) {
-    if (positives.length === 0) return [];
-    let wholeSet = new Set(Array.from({length: matrix[0].length}, (_, i) => i));
-    return Array.from(
-        positives
-        .map(i => setNonzeroIndices(matrix[i]))
-        .reduce((a, b) => a.intersection(b), wholeSet)
-    );
+// for each sample, count the number of positive pools it is in,
+// divided by m which is the total number of pools it is in
+export function solveMatrix(params, matrix, positives) {
+    let count = Array.from({length: matrix[0].length}, () => 0);
+    for (let pool of positives) {
+        for (let i = 0; i < matrix[0].length; i++) {
+            if (matrix[pool][i] === 1) {
+                count[i] += 1;
+            }
+        }
+    }
+    return count.map(x => x / params.m);
 }
 
 export function polynomialCoeffs(q, i) {

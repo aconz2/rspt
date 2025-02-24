@@ -10,7 +10,7 @@ body {
   /*max-width: 1280px;*/
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 #matrix thead {
@@ -20,12 +20,12 @@ body {
   padding: 5px;
 }
 
-#matrix #sampleno {
+.text-vert {
     /*font-size: 1vh;*/
     writing-mode: vertical-rl;
     text-orientation: upright;
     vertical-align: bottom;
-    td { width: 10px; }
+    width: 1ch;
 }
 #matrix tbody td {
     /*aspect-ratio: 1 / 1;*/
