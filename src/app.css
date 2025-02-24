@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /*display: flex;*/
+  /*place-items: center;*/
   /*min-width: 320px;*/
   /*min-height: 100vh;*/
 }
@@ -20,19 +20,12 @@ body {
   padding: 5px;
 }
 
-.text-vert {
-    /*font-size: 1vh;*/
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    vertical-align: bottom;
-    width: 1ch;
-}
 #matrix tbody td {
     /*aspect-ratio: 1 / 1;*/
     padding: 0;
 }
 
-#matrix .samplelistpad {
+#matrix table .samplelistpad {
     width: 20px;
 }
 #matrix .samplelist {
@@ -49,4 +42,13 @@ body {
 }
 #matrix td.filled {
     background-color: black;
+}
+
+
+.text-vert {
+    /*font-size: 1vh;*/
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    vertical-align: bottom;
+    width: 1ch;
 }

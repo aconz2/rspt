@@ -17,7 +17,7 @@ export function App() {
     const [k, setK] = useState(2);
     const [m, setM] = useState(6);
     const [n, setN] = useState(24);
-    const [positiveSamples, setPositiveSamples] = useState([]);
+    //const [positiveSamples, setPositiveSamples] = useState([]);
     const [positivePools, setPositivePools] = useState('');
 
     let params = new Params(q, k, m, n);
@@ -31,10 +31,23 @@ export function App() {
 
     const [checked, setChecked] = useState(Array.from({length: params.pools()}, () => false));
 
+    const genPositiveSamples = (checked) => {
+        // todo something gets a bit wonky and checked is longer when decreasing eg m
+        checked = checked.slice(0, params.pools());
+        let ratios = solveMatrix(params, matrix, isChecked(checked))
+            .map((x, i) => [i, x])
+        ratios.sort(([ia, xa], [ib, xb]) => xb - xa);
+        return ratios;
+    };
+
+    let positiveSamples = useMemo(
+        () => genPositiveSamples(checked),
+        [q, k, m, n, checked]
+    );
+
     const checkedChanged = (newChecked) => {
         setChecked(newChecked);
         updatePositivePoolsText(newChecked);
-        updatePositiveSamples(newChecked);
     };
 
     const onPoolChecked = (pool, checkbox) => {
@@ -68,23 +81,31 @@ export function App() {
             }
         }
         setChecked(newChecked);
-        updatePositiveSamples(newChecked);
     };
 
     const updatePositivePoolsText = (checked) => {
         setPositivePools(isChecked(checked).join(','));
     };
 
-    const updatePositiveSamples = (checked) => {
-        let ratios = solveMatrix(params, matrix, isChecked(checked))
-            .map((x, i) => [i, x])
-        ratios.sort(([ia, xa], [ib, xb]) => xb - xa);
-        console.log(ratios)
-        setPositiveSamples(ratios);
-    };
+    if (checked.length !== params.pools()) {
+        let newChecked = Array.from({length: params.pools()}, () => false);
+        for (let i of isChecked(checked)) {
+            if (i < newChecked.length) {
+                newChecked[i] = true;
+            }
+        }
+        checkedChanged(newChecked);
+        let pools = positivePools
+            .split(',')
+            .map(x => parseInt(x))
+            .filter(x => x < newChecked.length)
+            .join(',');
+        setPositivePools(pools);
+    }
 
     return (
-      <>
+    <>
+      <div id="dcontrols">
         <label for="q">q</label>
         <select value={q} name="q" onInput={e => setQ(parseInt(e.target.value))}>
             {validQ.map(x => <option key={x} value={x}>{x}</option>)}
@@ -128,7 +149,9 @@ export function App() {
                 <mn>{disjunctness}</mn>
             </math>
         </p>
+      </div>
 
+      <div id="dsamples">
         <table>
             <thead>
                 <tr><th>Positive Samples</th></tr>
@@ -144,8 +167,11 @@ export function App() {
             </tbody>
         </table>
 
-        <button onClick={() => clearAllPools()}>Clear</button>
+      </div>
 
+
+      <div id="dmatrix">
+        <button onClick={() => clearAllPools()}>Clear</button>
         <table id="matrix">
             <thead>
                 <tr><th colspan="2"></th><th colspan={matrix[0].length}>Sample</th></tr>
@@ -169,6 +195,7 @@ export function App() {
                 )}
             </tbody>
         </table>
-      </>
+      </div>
+    </>
     );
 }

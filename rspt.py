@@ -34,9 +34,11 @@ def build_testing_matrix(params: Params):
 
     return ret
 
-def solve_testing_matrix(mat: np.ndarray, positive: List[int]):
-    row = reduce(operator.and_, (mat[p] for p in positive))
-    return np.flatnonzero(row)
+def solve_testing_matrix(params: Params, mat: np.ndarray, positive: List[int]):
+    positive_vec = np.zeros(mat.shape[0], dtype=np.int32)
+    positive_vec[positive] = 1
+    print(mat.shape, positive_vec.shape)
+    return (positive_vec @ mat) / params.m
 
 def params_sweep():
     for q in [3, 4, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 32]:
@@ -83,16 +85,19 @@ def main(args):
     elif args.cmd == 'solve':
         if args.positive is None or len(args.positive) == 0:
             raise Exception('need to pass --positive=1,5,7 comma sep list of positive pool ids')
-        if len(args.positive) > d:
-            print(f'# WARNING this sample configuration can only distinguish {d} positives but got {len(args.positive)}')
+        # if len(args.positive) > d:
+        #     print(f'# WARNING this sample configuration can only distinguish {d} positives but got {len(args.positive)}')
         params = Params(q=args.q, k=args.k, m=args.m, n=args.n)
         matrix = build_testing_matrix(params)
-        samples = solve_testing_matrix(matrix, args.positive)
-        print(samples)
+        ratios = solve_testing_matrix(params, matrix, args.positive)
+        result = sorted([(ratio, sample) for sample, ratio in enumerate(ratios) if ratio > 0])
+        print('sample,percent-pools-positive')
+        for ratio, sample in result:
+            print(f'{sample: 3d},{ratio:.2f}')
     elif args.cmd == 'all-outcomes':
         np.set_printoptions(linewidth=1000)
         for combo in itertools.combinations(range(matrix.shape[0]), d):
-            samples = solve_testing_matrix(matrix, combo)
+            samples = solve_testing_matrix(params, matrix, combo)
             if len(samples) == 0:
                 continue
             print(combo, samples)
