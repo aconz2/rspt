@@ -12,12 +12,10 @@ function isChecked(arr) {
 }
 
 export function App() {
-    console.log('render')
     const [q, setQ] = useState(8);
     const [k, setK] = useState(2);
     const [m, setM] = useState(6);
     const [n, setN] = useState(24);
-    //const [positiveSamples, setPositiveSamples] = useState([]);
     const [positivePools, setPositivePools] = useState('');
 
     let params = new Params(q, k, m, n);
@@ -106,6 +104,7 @@ export function App() {
     return (
     <>
       <div id="dcontrols">
+        <h2>Inputs</h2>
         <label for="q">q</label>
         <select value={q} name="q" onInput={e => setQ(parseInt(e.target.value))}>
             {validQ.map(x => <option key={x} value={x}>{x}</option>)}
@@ -125,14 +124,35 @@ export function App() {
         }}
         />
 
-        <br />
-
         <label for="positive">positive pools</label>
         <input type="text" name="positive" value={positivePools} onInput={e => onPositivePoolsTextChanged(e.target.value)} />
 
+        <hr />
 
-        <p>n_pools={pools}</p>
-        <p>ratio specimens to pools {ratio.toFixed(2)}</p>
+        <p>
+            n_pools &nbsp;
+            <math>
+                <mi>p</mi>
+                <mo>=</mo>
+                <mi>q</mi>
+                <mi>m</mi>
+                <mo>=</mo>
+                <mn>{pools}</mn>
+            </math>
+        </p>
+        <p>
+            ratio specimens to pools &nbsp;
+            <math>
+                <mi>r</mi>
+                <mo>=</mo>
+                <mfrac>
+                    <mi>n</mi>
+                    <mi>p</mi>
+                </mfrac>
+                <mo>=</mo>
+                <mn>{ratio.toFixed(2)}</mn>
+            </math>
+        </p>
         <p>
             disjunctness &nbsp;
             <math>
@@ -151,10 +171,13 @@ export function App() {
         </p>
       </div>
 
+      <hr />
+
       <div id="dsamples">
+        <h2>Positive Samples</h2>
         <table>
             <thead>
-                <tr><th>Positive Samples</th></tr>
+                {/*<tr><th>Positive Samples</th></tr>*/}
                 <tr><th>Sample No</th><th>% Pools Positive</th></tr>
             </thead>
             <tbody>
@@ -169,9 +192,11 @@ export function App() {
 
       </div>
 
+      <hr />
 
       <div id="dmatrix">
-        <button onClick={() => clearAllPools()}>Clear</button>
+        <h2>Testing Matrix</h2>
+        <button onClick={() => clearAllPools()}>Clear Selected Pools</button>
         <table id="matrix">
             <thead>
                 <tr><th colspan="2"></th><th colspan={matrix[0].length}>Sample</th></tr>
