@@ -2,7 +2,7 @@
 
 set -e
 
-rm -rf docs
+git rm -rf docs
 npm run build
 mv dist docs
 git add docs
