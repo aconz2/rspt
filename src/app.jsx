@@ -14,8 +14,8 @@ function isChecked(arr) {
 export function App() {
     const [q, setQ] = useState(8);
     const [k, setK] = useState(2);
-    const [m, setM] = useState(6);
-    const [n, setN] = useState(24);
+    const [m, setM] = useState(3);
+    const [n, setN] = useState(48);
     const [positivePools, setPositivePools] = useState('');
 
     let params = new Params(q, k, m, n);
@@ -103,6 +103,8 @@ export function App() {
 
     return (
     <>
+      <div class="flexRow">
+
       <div id="dcontrols">
         <h2>Inputs</h2>
         <label for="q">q</label>
@@ -126,9 +128,10 @@ export function App() {
 
         <label for="positive">positive pools</label>
         <input type="text" name="positive" value={positivePools} onInput={e => onPositivePoolsTextChanged(e.target.value)} />
+      </div>
 
-        <hr />
 
+        <div>
         <p>
             n_pools &nbsp;
             <math>
@@ -168,10 +171,15 @@ export function App() {
                 <mo>=</mo>
                 <mn>{disjunctness}</mn>
             </math>
-        </p>
+      </p>
+      </div>
+
+
       </div>
 
       <hr />
+
+      <div class="flexRow">
 
       <div id="dsamples">
         <h2>Positive Samples</h2>
@@ -203,7 +211,7 @@ export function App() {
                 <tr>
                     <td></td>
                     <td></td>
-                    {matrix[0].map((_, i) => <td class="text-vert"><button onClick={e => onSampleClicked(i)}>{i}</button></td>)}
+                    {matrix[0].map((_, i) => <td class="text-vert"><button class="sample-button" onClick={e => onSampleClicked(i)}>{i}</button></td>)}
                     <td></td>
                 </tr>
             </thead>
@@ -220,6 +228,8 @@ export function App() {
                 )}
             </tbody>
         </table>
+      </div>
+
       </div>
     </>
     );

@@ -44,11 +44,23 @@ body {
     background-color: black;
 }
 
-
 .text-vert {
     /*font-size: 1vh;*/
     writing-mode: vertical-rl;
     text-orientation: upright;
     vertical-align: bottom;
     width: 1ch;
+    /*padding: 0;*/
+}
+
+.flexRow {
+    display: flex;
+    align-items: normal;
+}
+
+#dcontrols {
+    padding-right: 20px;
+    input,select {
+        margin-right: 10px;
+    }
 }
